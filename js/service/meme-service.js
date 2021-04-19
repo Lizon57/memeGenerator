@@ -21,17 +21,29 @@ var gMeme = [
             {
                 lineId: 0,
                 txt: 'First line',
-                size: 30
+                size: 30,
+                align: 'center',
+                font: 'impact',
+                stroke: { doStroke: true, size: 5, color: 'black' },
+                color: '#ffffff'
             },
             {
                 lineId: 1,
                 txt: 'Second line',
-                size: 30
+                size: 25,
+                align: 'center',
+                font: 'impact',
+                stroke: { doStroke: true, size: 5, color: 'black' },
+                color: '#ffffff'
             },
             {
                 lineId: 2,
                 txt: 'Third line',
-                size: 30
+                size: 30,
+                align: 'center',
+                font: 'impact',
+                stroke: { doStroke: true, size: 5, color: 'black' },
+                color: '#ffffff'
             },
         ]
     }
@@ -88,7 +100,11 @@ function getMemeIdxInGMeme(requestedId) {
                     {
                         lineId: 0,
                         txt: '',
-                        size: 30
+                        size: 30,
+                        align: 'center',
+                        font: 'impact',
+                        stroke: { doStroke: true, size: 1, color: 'black' },
+                        color: '#ffffff'
                     }
                 ]
             }
@@ -106,23 +122,6 @@ function changeMemeLine(txt) {
     gMeme[memeIdxInArr].lines[gCurrLine].txt = txt;
 }
 
-// Define changeFontSize() - change font size of curr line on model
-function changeFontSize(action) {
-
-    const currSize = gMeme[getMemeIdxInGMeme(gCurrMeme)].lines[gCurrLine].size;
-
-    switch (action) {
-        case 'increase':
-            if (currSize === 60) break;
-            gMeme[getMemeIdxInGMeme(gCurrMeme)].lines[gCurrLine].size += 2;
-            break;
-        case 'decrease':
-            if (currSize === 10) break;
-            gMeme[getMemeIdxInGMeme(gCurrMeme)].lines[gCurrLine].size -= 2;
-            break;
-    }
-}
-
 // Define changeWorkingLine() - change curr line on model
 function changeWorkingLine(action) {
     switch (action) {
@@ -132,7 +131,11 @@ function changeWorkingLine(action) {
                 gMeme[getMemeIdxInGMeme(gCurrMeme)].lines[gCurrLine] = {
                     lineId: gCurrLine,
                     txt: '',
-                    size: 30
+                    size: 30,
+                    align: 'center',
+                    font: 'impact',
+                    stroke: { doStroke: true, size: 1, color: 'black' },
+                    color: '#ffffff'
                 }
             }
             break;
@@ -151,4 +154,65 @@ function getCurrWorkingLine() {
 // Define deleteLine() - delete curr line
 function deleteLine() {
     gMeme[getMemeIdxInGMeme(gCurrMeme)].lines[gCurrLine].txt = '';
+}
+
+// Define changeTextAlign() - change line alignment
+function changeTextAlign(direction) {
+    gMeme[getMemeIdxInGMeme(gCurrMeme)].lines[gCurrLine].align = direction;
+}
+
+// Define changeTextFont() - change line font
+function changeTextFont(font) {
+    gMeme[getMemeIdxInGMeme(gCurrMeme)].lines[gCurrLine].font = font
+}
+
+// Define toggleStroke() - toggle curr line stroke
+function toggleStroke() {
+    let stroke = gMeme[getMemeIdxInGMeme(gCurrMeme)].lines[gCurrLine].stroke;
+    stroke.doStroke = !stroke.doStroke;
+}
+
+// Define isCurrStroke() - returns curr line stroke size value
+function isCurrStroke() {
+    return gMeme[getMemeIdxInGMeme(gCurrMeme)].lines[gCurrLine].stroke.doStroke;
+}
+
+// Define changeStrokeColor() - change curr line stroke color
+function changeStrokeColor(color) {
+    gMeme[getMemeIdxInGMeme(gCurrMeme)].lines[gCurrLine].stroke.color = color;
+}
+
+// Define getCurrLineStrokeColor() - return curr line stroke color
+function getCurrLineStrokeColor(){
+    return gMeme[getMemeIdxInGMeme(gCurrMeme)].lines[gCurrLine].stroke.color;
+}
+
+//Define changeStrokeSize() - change curr line stroke size
+function changeStrokeSize(size){
+    gMeme[getMemeIdxInGMeme(gCurrMeme)].lines[gCurrLine].stroke.size = size;
+}
+
+// Define getCurrStrokeSize() - return curr line stroke size
+function getCurrStrokeSize(){
+    return gMeme[getMemeIdxInGMeme(gCurrMeme)].lines[gCurrLine].stroke.size;
+}
+
+// Define changeFontColor() - change curr line stroke color
+function changeFontColor(color) {
+    gMeme[getMemeIdxInGMeme(gCurrMeme)].lines[gCurrLine].color = color;
+}
+
+// Define getCurrLineFontColor() - return curr line stroke color
+function getCurrLineFontColor(){
+    return gMeme[getMemeIdxInGMeme(gCurrMeme)].lines[gCurrLine].color;
+}
+
+// Define changeFontSize - change curr line font size
+function changeFontSize(size){
+    gMeme[getMemeIdxInGMeme(gCurrMeme)].lines[gCurrLine].size = size;
+}
+
+// Define getCurrFontSize() - return curr line stroke size
+function getCurrFontSize(){
+    return gMeme[getMemeIdxInGMeme(gCurrMeme)].lines[gCurrLine].size;
 }

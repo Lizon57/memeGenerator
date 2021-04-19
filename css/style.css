@@ -8,6 +8,26 @@
     src: url('../font/Montserrat-Bold.ttf');
 }
 
+@font-face{
+    font-family: libreBaskerville;
+    src: url('../font/LibreBaskerville-Regular.ttf')
+}
+
+@font-face{
+    font-family: monoton;
+    src: url('../font/Monoton-Regular.ttf')
+}
+
+@font-face{
+    font-family: courgette;
+    src: url('../font/Courgette-Regular.ttf')
+}
+
+@font-face{
+    font-family: nova;
+    src: url('../font/NovaMono-Regular.ttf')
+}
+
 @font-face {
     font-family: font-awsome;
     src: url('../font/Font-Awsome.ttf');
@@ -107,7 +127,7 @@ main{
     text-align: center;
 }
 
-.meme-editor input{
+.meme-editor input:first-child{
     background-color: #a8172a;
     color: white;
     font-family: Impact, sans-serif;
@@ -140,6 +160,10 @@ main{
     content: '\f038';
 }
 
+.fa-stroke::before{
+    content: '\f032';
+}
+
 .btn{
     cursor: pointer;
     color: white;
@@ -155,6 +179,35 @@ main{
     margin-top: 2rem;
 }
 
+.meme-editor-opts select,
+option{
+    font-size: 1.3rem;
+}
+
+option[name="impact"]{
+    font-family: impact, sans-serif;
+}
+
+option[name="libre"]{
+    font-family: libreBaskerville, serif;
+}
+
+option[name="monoton"]{
+    font-family: monoton;
+}
+
+option[name="courgette"]{
+    font-family: courgette;
+}
+
+option[name="nova"]{
+    font-family: nova;
+}
+
+input[type="range"]{
+    cursor: pointer;
+    box-shadow: 1px 1px 1px black;
+}
 
 /* FOOTER */
 footer{

@@ -3,9 +3,14 @@
 // Define init() - init the page when loaded
 function init() {
     onCreateGallery();
-    renderCanvas();
     renderTextInput();
     renderWorkingLine();
+    toggleStrokeBtn();
+    renderStrokeColorPicker();
+    renderStrokeSize();
+    renderFontColorPicker();
+    renderFontSize();
+    renderCanvas();
 }
 
 // Define onCreateGallery() - create meme gallery
@@ -49,13 +54,13 @@ function renderCanvas() {
             memeLines.forEach((line) => {
                 switch (line.lineId) {
                     case 0:
-                        drawStroke(ctx, line.size, line.txt, { x: 250, y: 50 });
+                        drawLine(ctx, line.txt, line.size, line.align, line.font, line.stroke, line.color, { x: 250, y: 50 });
                         break;
                     case 1:
-                        drawStroke(ctx, line.size, line.txt, { x: 250, y: 450 });
+                        drawLine(ctx, line.txt, line.size, line.align, line.font, line.stroke, line.color, { x: 250, y: 450 });
                         break;
                     default:
-                        drawStroke(ctx, line.size, line.txt, { x: elCanvas.width / 2, y: elCanvas.height / 2 });
+                        drawLine(ctx, line.txt, line.size, line.align, line.font, line.stroke, line.color, { x: elCanvas.width / 2, y: elCanvas.height / 2 });
                 }
             })
         }
@@ -64,17 +69,21 @@ function renderCanvas() {
 
 }
 
-// Define drawStroke() - draw stroked and filled txt 
-function drawStroke(ctx, size, line, pos) {
-    ctx.font = `${size}px impact`;
+// Define drawLine() - draw text line to canvas
+function drawLine(ctx, line, size, align, font, stroke, color, pos) {
+    ctx.font = `${size}px ${font}`;
+    ctx.textAlign = align;
 
-    // Print stroked txt
-    ctx.strokeStyle = 'black';
-    ctx.lineWidth = 4;
-    ctx.strokeText(line, pos.x, pos.y);
+    // Handle stroke
+    if (!stroke.doStroke) ctx.lineWidth = 0;
+    else {
+        ctx.lineWidth = stroke.size;
+        ctx.strokeStyle = stroke.color;
+        ctx.strokeText(line, pos.x, pos.y);
+    }
 
     // Print filled txt
-    ctx.fillStyle = 'white';
+    ctx.fillStyle = color;
     ctx.fillText(line, pos.x, pos.y);
 }
 
@@ -86,7 +95,7 @@ function renderTextInput() {
     if (!memeLines.length) {
         elTextInput.value = '';
         return;
-    }else if(!memeLines[0].lines[gCurrLine]){
+    } else if (!memeLines[0].lines[gCurrLine]) {
         elTextInput.value = '';
         return;
     }
@@ -100,29 +109,111 @@ function onChangeLine(txt) {
     renderCanvas();
 }
 
-// Define onChangeFontSize() - increase / decrease font size and render to the DOM
-function onChangeFontSize(action){
-    changeFontSize(action);
-    renderCanvas();
-}
-
 // Define onChangeWorkingLine() - increase / decrease curr line
-function onChangeWorkingLine(action){
+function onChangeWorkingLine(action) {
     changeWorkingLine(action);
     renderWorkingLine();
+    renderStrokeColorPicker();
+    renderStrokeSize();
+    renderFontColorPicker();
+    renderFontSize();
     renderTextInput();
 }
 
 // Define renderWorkingLine() - renders the curr working line to the DOM
-function renderWorkingLine(){
+function renderWorkingLine() {
     const elWorkingLine = document.querySelector('[name="curr-line"]');
 
-    elWorkingLine.innerText = getCurrWorkingLine()+1;
+    elWorkingLine.innerText = getCurrWorkingLine() + 1;
 }
 
 // Define onDeleteLine() - Delete curr line
-function onDeleteLine(){
+function onDeleteLine() {
     deleteLine();
     renderTextInput();
     renderCanvas();
+}
+
+// Define onChangeTextAlign() - change line alignment
+function onChangeTextAlign(direction) {
+    changeTextAlign(direction);
+    renderCanvas();
+}
+
+// Define onSelectFont() - change line font
+function onSelectFont(font) {
+    changeTextFont(font);
+    renderCanvas();
+}
+
+// Define onToggleStroke - toggle line stroke
+function onToggleStroke() {
+    toggleStroke();
+    toggleStrokeBtn();
+    renderCanvas();
+}
+
+// Define toggleStrokeBtn() - render Stroke / not stroke btn
+function toggleStrokeBtn() {
+    const elStrokeBtn = document.querySelector('.fa-stroke');
+
+    if (isCurrStroke()) {
+        elStrokeBtn.style['-webkit-text-stroke'] = '1px black';
+    } else {
+        elStrokeBtn.style['-webkit-text-stroke'] = '0';
+    }
+}
+
+// Define onChangeStrokeColor() - change stroke color
+function onChangeStrokeColor(color){
+    changeStrokeColor(color);
+    renderCanvas();
+}
+
+// Define renderStrokeColorPicker() - render stroke color picker to curr line color
+function renderStrokeColorPicker(){
+    let elColorPicker = document.querySelector('input[name="stroke-color-picker"]');
+
+    elColorPicker.value = getCurrLineStrokeColor();
+}
+
+// Define onChangeStrokeSize() - handle change stroke size
+function onChangeStrokeSize(size){
+    changeStrokeSize(size);
+    renderStrokeSize(size);
+    renderCanvas();
+}
+
+// Define renderStrokeSize() - render curr stroke size to dom
+function renderStrokeSize(size = getCurrStrokeSize()){
+    let elStrokeSizeRange = document.querySelector('.curr-stroke');
+
+    elStrokeSizeRange.innerText = size + 'px';
+}
+
+// Define onChangeFontColor() - change stroke color
+function onChangeFontColor(color){
+    changeFontColor(color);
+    renderCanvas();
+}
+
+// Define renderFontColorPicker() - render font color picker to curr line color
+function renderFontColorPicker(){
+    let elColorPicker = document.querySelector('input[name="font-color-picker"]');
+
+    elColorPicker.value = getCurrLineFontColor();
+}
+
+// Define onChangeStrokeSize() - handle change font size
+function onChangeFontSize(size){
+    changeFontSize(size);
+    renderFontSize(size);
+    renderCanvas();
+}
+
+// Define renderFontSize() - render curr stroke size to dom
+function renderFontSize(size = getCurrFontSize()){
+    let elStrokeSizeRange = document.querySelector('.curr-font-size');
+
+    elStrokeSizeRange.innerText = size + 'px';
 }
