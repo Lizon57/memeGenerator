@@ -15,25 +15,63 @@
 
 <body onload="init()">
 
-    <!-- TODO: add gallery -->
-    <section class="meme-gallery">
-
-    </section>
-
-
-    <!-- Meme editor -->
-    <section>
-        <div class="meme-container">
-            <canvas id="meme-canvas" width="500" height="500"></canvas>
+    <!-- Navigation bar -->
+    <nav>
+        <div class="container flex space-between align-center">
+            <a href="#"><img src="img/logo.png" alt="logo" /></a>
+            <div class="nav-menu">
+                <span class="nav-hamburger" onclick="menuToggle()">☰</span>
+                <ul class="clean-list flex">
+                    <li><a href="#">Gallery</a></li>
+                    <li><a href="#">Saved</a></li>
+                    <li><a href="#">About</a></li>
+                </ul>
+            </div>
         </div>
-
-        <label for="memeTxt">
-            Meme text:
-            <input type="text" size="40" id="memeTxt" onkeyup="onChangeLine(this.value)">
-        </label>
-    </section>
+    </nav>
 
 
+    <!-- The page -->
+    <main class="container">
+
+        <!-- TODO: add gallery -->
+        <section class="meme-gallery">
+        </section>
+
+        <!-- Meme editor -->
+        <section class="meme-editor-section">
+            <div class="meme-canvas-container">
+                <canvas id="meme-canvas" width="500" height="500"></canvas>
+            </div>
+
+            <div class="meme-editor">
+                <input type="text" class="line-input" placeholder="Please insert text" size="40"
+                    onkeyup="onChangeLine(this.value)">
+                (Curr Line: <span name="curr-line"></span>)
+                <button class="btn" onclick="onChangeWorkingLine('increase')">↑</button>
+                <button class="btn" onclick="onChangeWorkingLine('decrease')">↓</button>
+                <button class="btn fa fa-trash" onclick="onDeleteLine()"></button>
+                <div class="meme-editor-opts">
+                    <button class="btn" onclick="onChangeFontSize('increase')">A+</button>
+                    <button class="btn" onclick="onChangeFontSize('decrease')">A-</button>
+
+                    <button class="btn fa fa-align-left" onclick="onChangeTextAlign('left')"></button>
+                    <button class="btn fa fa-align-center" onclick="onChangeTextAlign('center')"></button>
+                    <button class="btn fa fa-align-right" onclick="onChangeTextAlign('right')"></button>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+
+    <!-- Footer -->
+    <footer>
+        &copy; Meme Generator by Oren Yaniv.
+    </footer>
+
+
+    <script src="js/menu.js"></script>
     <script src="js/service/meme-service.js"></script>
     <script src="js/controller/meme-controller.js"></script>
 </body>

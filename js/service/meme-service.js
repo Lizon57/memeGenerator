@@ -20,21 +20,25 @@ var gMeme = [
         lines: [
             {
                 lineId: 0,
-                txt: 'First line'
+                txt: 'First line',
+                size: 30
             },
             {
                 lineId: 1,
-                txt: 'Second line'
+                txt: 'Second line',
+                size: 30
             },
             {
                 lineId: 2,
-                txt: 'Third line'
+                txt: 'Third line',
+                size: 30
             },
         ]
     }
 ];
 
 var gCurrMeme = 1;
+var gCurrLine = 0;
 
 // Define getMemeLst() - returns meme list (gImgs)
 function getMemeLst() {
@@ -65,6 +69,7 @@ function getMemeLinesById(id) {
 function pickImgById(id) {
     gCurrMeme = id;
     renderCanvas();
+    renderTextInput();
 }
 
 // Define getMemeIdxInGMeme() - return the meme idx in gMeme arr
@@ -82,7 +87,8 @@ function getMemeIdxInGMeme(requestedId) {
                 lines: [
                     {
                         lineId: 0,
-                        txt: ''
+                        txt: '',
+                        size: 30
                     }
                 ]
             }
@@ -97,5 +103,52 @@ function getMemeIdxInGMeme(requestedId) {
 function changeMemeLine(txt) {
     const memeIdxInArr = getMemeIdxInGMeme(gCurrMeme);
 
-    gMeme[memeIdxInArr].lines[0].txt = txt;
+    gMeme[memeIdxInArr].lines[gCurrLine].txt = txt;
+}
+
+// Define changeFontSize() - change font size of curr line on model
+function changeFontSize(action) {
+
+    const currSize = gMeme[getMemeIdxInGMeme(gCurrMeme)].lines[gCurrLine].size;
+
+    switch (action) {
+        case 'increase':
+            if (currSize === 60) break;
+            gMeme[getMemeIdxInGMeme(gCurrMeme)].lines[gCurrLine].size += 2;
+            break;
+        case 'decrease':
+            if (currSize === 10) break;
+            gMeme[getMemeIdxInGMeme(gCurrMeme)].lines[gCurrLine].size -= 2;
+            break;
+    }
+}
+
+// Define changeWorkingLine() - change curr line on model
+function changeWorkingLine(action) {
+    switch (action) {
+        case 'increase':
+            gCurrLine++;
+            if (!gMeme[getMemeIdxInGMeme(gCurrMeme)].lines[gCurrLine]) {
+                gMeme[getMemeIdxInGMeme(gCurrMeme)].lines[gCurrLine] = {
+                    lineId: gCurrLine,
+                    txt: '',
+                    size: 30
+                }
+            }
+            break;
+        case 'decrease':
+            if (gCurrLine === 0) break;
+            gCurrLine--;
+            break;
+    }
+}
+
+// Define getCurrWorkingLine() - returns gCurrLine
+function getCurrWorkingLine() {
+    return gCurrLine;
+}
+
+// Define deleteLine() - delete curr line
+function deleteLine() {
+    gMeme[getMemeIdxInGMeme(gCurrMeme)].lines[gCurrLine].txt = '';
 }

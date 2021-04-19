@@ -4,11 +4,13 @@
 function init() {
     onCreateGallery();
     renderCanvas();
+    renderTextInput();
+    renderWorkingLine();
 }
 
 // Define onCreateGallery() - create meme gallery
 function onCreateGallery() {
-    const gallery = document.querySelector('.meme-gallery');
+    const elGallery = document.querySelector('.meme-gallery');
     const memeLst = getMemeLst();
 
     let strsHTML = '';
@@ -17,7 +19,7 @@ function onCreateGallery() {
         strsHTML += `<div class="gallery-item"><img src="${meme.url}" onclick="pickImgById(${meme.id})" /></div>\n`;
     });
 
-    gallery.innerHTML = strsHTML;
+    elGallery.innerHTML = strsHTML;
 }
 
 
@@ -26,9 +28,8 @@ function onCreateGallery() {
 function renderCanvas() {
 
     // Define canvas helpers
-    const canvas = document.querySelector("canvas");
-    const ctx = canvas.getContext("2d");
-    ctx.font = '30px Impact';
+    const elCanvas = document.querySelector("canvas");
+    const ctx = elCanvas.getContext("2d");
     ctx.textAlign = 'center';
 
     // Handle curr meme img
@@ -42,19 +43,19 @@ function renderCanvas() {
 
         // Handle curr meme lines
         let memeLines = getMemeLinesById(gCurrMeme);
-        
+
         if (memeLines.length) {
             memeLines = memeLines[0].lines
             memeLines.forEach((line) => {
                 switch (line.lineId) {
                     case 0:
-                        drawStroke(ctx, line.txt, { x: 250, y: 50 });
+                        drawStroke(ctx, line.size, line.txt, { x: 250, y: 50 });
                         break;
                     case 1:
-                        drawStroke(ctx, line.txt, { x: 250, y: 450 });
+                        drawStroke(ctx, line.size, line.txt, { x: 250, y: 450 });
                         break;
                     default:
-                        drawStroke(ctx, line.txt, { x: canvas.width / 2, y: canvas.height / 2 });
+                        drawStroke(ctx, line.size, line.txt, { x: elCanvas.width / 2, y: elCanvas.height / 2 });
                 }
             })
         }
@@ -64,7 +65,8 @@ function renderCanvas() {
 }
 
 // Define drawStroke() - draw stroked and filled txt 
-function drawStroke(ctx, line, pos) {
+function drawStroke(ctx, size, line, pos) {
+    ctx.font = `${size}px impact`;
 
     // Print stroked txt
     ctx.strokeStyle = 'black';
@@ -76,8 +78,51 @@ function drawStroke(ctx, line, pos) {
     ctx.fillText(line, pos.x, pos.y);
 }
 
+// Define renderTextInput();
+function renderTextInput() {
+    let memeLines = getMemeLinesById(gCurrMeme);
+    const elTextInput = document.querySelector('.line-input');
+
+    if (!memeLines.length) {
+        elTextInput.value = '';
+        return;
+    }else if(!memeLines[0].lines[gCurrLine]){
+        elTextInput.value = '';
+        return;
+    }
+
+    elTextInput.value = memeLines[0].lines[gCurrLine].txt;
+}
+
 // Define onChangeLine() - changes line when typing
 function onChangeLine(txt) {
     changeMemeLine(txt);
+    renderCanvas();
+}
+
+// Define onChangeFontSize() - increase / decrease font size and render to the DOM
+function onChangeFontSize(action){
+    changeFontSize(action);
+    renderCanvas();
+}
+
+// Define onChangeWorkingLine() - increase / decrease curr line
+function onChangeWorkingLine(action){
+    changeWorkingLine(action);
+    renderWorkingLine();
+    renderTextInput();
+}
+
+// Define renderWorkingLine() - renders the curr working line to the DOM
+function renderWorkingLine(){
+    const elWorkingLine = document.querySelector('[name="curr-line"]');
+
+    elWorkingLine.innerText = getCurrWorkingLine()+1;
+}
+
+// Define onDeleteLine() - Delete curr line
+function onDeleteLine(){
+    deleteLine();
+    renderTextInput();
     renderCanvas();
 }
