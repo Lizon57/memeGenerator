@@ -5,3 +5,13 @@
 body{
     margin: 0;
 }
+
+.gallery-item{
+    display: inline-block;
+}
+
+.gallery-item img{
+    cursor: pointer;
+    width: 100px;
+    height: auto;
+}

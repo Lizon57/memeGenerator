@@ -13,11 +13,29 @@
     <link rel="icon" type="image/png" href="img/favicon.png" />
 </head>
 
-<body>
+<body onload="init()">
+
+    <!-- TODO: add gallery -->
+    <section class="meme-gallery">
+
+    </section>
 
 
-    <script src="js/service/gallery-service.js"></script>
-    <script src="js/controller/gallery-controller.js"></script>
+    <!-- Meme editor -->
+    <section>
+        <div class="meme-container">
+            <canvas id="meme-canvas" width="500" height="500"></canvas>
+        </div>
+
+        <label for="memeTxt">
+            Meme text:
+            <input type="text" size="40" id="memeTxt" onkeyup="onChangeLine(this.value)">
+        </label>
+    </section>
+
+
+    <script src="js/service/meme-service.js"></script>
+    <script src="js/controller/meme-controller.js"></script>
 </body>
 
 </html>
