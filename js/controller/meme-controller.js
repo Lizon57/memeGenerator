@@ -315,7 +315,7 @@ function dadUp() {
 // Define onDownloadMeme() - download meme as png
 function onDownloadMeme(elLink) {
     const elCanvas = document.querySelector('canvas');
-    let meme = elCanvas.toDataURL('image/jpeg');
+    let meme = elCanvas.toDataURL();
     elLink.href = meme;
 }
 
@@ -342,19 +342,20 @@ function onShareMeme(elForm, ev) {
     ev.preventDefault();
     const elCanvas = document.querySelector('canvas');
     document.getElementById('imgData').value = elCanvas.toDataURL("image/jpeg");
-    let inputVal = document.getElementById('imgData').value;
-    doUploadImg(elForm, onSuccess, inputVal);
 
+    // A function to be called if request succeeds
     function onSuccess(uploadedImgUrl) {
-        uploadedImgUrl = encodeURIComponent(uploadedImgUrl);
-        window.open(`https://www.facebook.com/sharer?u=${uploadedImgUrl}`, '_blank')
+        uploadedImgUrl = encodeURIComponent(uploadedImgUrl)
+        window.open(`https://www.facebook.com/sharer?u=${uploadedImgUrl}`, '_blank');
     }
+
+    doUploadImg(elForm, onSuccess);
 }
 
 // Define doUploadImage() - try to upload image to web
 function doUploadImg(elForm, onSuccess) {
-    var formData = new FormData(elForm);
-    fetch('//ca-upload.com/here/upload.php', {
+    let formData = new FormData(elForm);
+    fetch('http://ca-upload.com/here/upload.php', {
         method: 'POST',
         body: formData
     })
@@ -365,4 +366,12 @@ function doUploadImg(elForm, onSuccess) {
         .catch(function (err) {
             console.error(err)
         })
+}
+
+// Define onShareWhatsApp() - share to whatsapp
+function onShareWhatsApp() {
+    const elCanvas = document.querySelector('canvas');
+    const meme = elCanvas.toDataURL('image/jpeg');
+    console.log(meme)
+    // window.open(`https://api.whatsapp.com/send?text=${meme}`, '_blank');
 }

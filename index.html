@@ -95,13 +95,15 @@
 
                 <div class="shareAndDownload flex space-between">
                     <form action="" method="POST" enctype="multipart/form-data" onsubmit="onShareMeme(this, event)">
-                        <input id="imgData" hidden />
-                        <button class="dark-btn" type="submit">Share</button>
+                        <input name="img" id="imgData" hidden />
+                        <button class="dark-btn" type="submit">Share FB</button>
                     </form>
-                    <button class="dark-btn" onclick="onStoreMeme()">Save</button>
-                    <a class="dark-btn" onclick="onDownloadMeme(this)"  download="my-meme.jpg">Download</a>
 
-            </div>
+                    <button class="dark-btn" onclick="onShareWhatsApp()">Share W</button>
+                    <button class="dark-btn" onclick="onStoreMeme()">Save</button>
+                    <a class="dark-btn" onclick="onDownloadMeme(this)" download="my-meme.png">Download</a>
+
+                </div>
         </section>
 
         <section class="saved-meme">
