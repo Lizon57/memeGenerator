@@ -1,6 +1,6 @@
 'use strict';
 
-var gImgs = [
+let gImgs = [
     {
         id: 1,
         url: 'img/meme/1.jpg',
@@ -13,7 +13,7 @@ var gImgs = [
     }
 ];
 
-var gMeme = [
+let gMeme = [
     {
         imgId: 1,
         selectedLineIdx: 0,
@@ -43,14 +43,18 @@ var gMeme = [
     }
 ];
 
-var gCurrMeme = 1;
-var gCurrLine = 0;
+let gCurrMeme = 1;
+let gCurrLine = 0;
+
+let gStickers = ['😃', '😄', '😁', '😆', '😅', '🤣', '😂', '🤪', '😎', '😈',
+    '🙈', '🙉', '🙊', '🐪', '🐫', '🐸', '🐬', '🐦', '🐔', '🦃',
+    '🍇', '🍈', '🍉', '🍊', '🍌', '⚽', '⚾', '🏀', '🏐', '🏈',
+    '🛎️', '🎈', '🎀', '🧶', '💎', '🚩', '🏳️‍🌈', '🏴󠁵󠁳󠁴󠁸󠁿', '🎌', '🏴‍☠️'];
 
 // Define getMemeLst() - returns meme list (gImgs)
 function getMemeLst() {
     return gImgs;
 }
-
 
 // Define getCurrMemeImg() - returns curr meme
 function getCurrMemeImg() {
@@ -276,4 +280,28 @@ function getLinePos() {
 // Define changeLinePos() - change curr linde drag pos
 function changeLinePos(line, pos) {
     gMeme[getMemeIdxInGMeme(gCurrMeme)].lines[line].pos = pos;
+}
+
+// Define addSticker() - add sticker line to curr meme
+function addSticker(sticker) {
+    let currMemeLines = gMeme[getMemeIdxInGMeme(gCurrMeme)].lines;
+    currMemeLines.push({
+        lineId: currMemeLines.length,
+        txt: sticker,
+        font: {
+            family: 'impact',
+            size: 30,
+            align: 'center',
+            color: '#000000'
+        },
+        pos: {
+            x: 250,
+            y: 250
+        },
+        stroke: {
+            doStroke: false,
+            size: 1,
+            color: '#ffffff'
+        }
+    })
 }

@@ -55,7 +55,6 @@ function drawSavedCanvas(idx, meme) {
 
 // Define drawSavedLine() - draw saved line on canvas
 function drawSavedLine(ctx, line) {
-    console.log(line.pos)
     ctx.font = `${line.font.size / RESIZER}px ${line.font.family}`;
     ctx.textAlign = line.font.align;
 

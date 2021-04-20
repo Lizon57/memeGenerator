@@ -14,6 +14,7 @@ function init() {
     renderStrokeSize();
     renderFontColorPicker();
     renderFontSize();
+    renderStickers();
     renderCanvas();
     addListeners();
 }
@@ -309,4 +310,59 @@ function dadMove() {
 function dadUp() {
     gIsDraging = false;
     document.body.style.cursor = 'auto';
+}
+
+// Define onDownloadMeme() - download meme as png
+function onDownloadMeme(elLink) {
+    const elCanvas = document.querySelector('canvas');
+    let meme = elCanvas.toDataURL('image/jpeg');
+    elLink.href = meme;
+}
+
+// Define renderStickers() - render stickers to the DOM
+function renderStickers() {
+    const elStickers = document.querySelector('.stickers-container');
+    let strsHTML = '';
+
+    gStickers.map((sticker) => {
+        strsHTML += `<span onclick="onAddSticker(this.innerText)">${sticker}</span>\n`;
+    });
+
+    elStickers.innerHTML = strsHTML;
+}
+
+// Define onAddSticker() - add sticker to meme
+function onAddSticker(sticker) {
+    addSticker(sticker);
+    renderCanvas();
+}
+
+// Define onShareMeme() - share meme to facebook
+function onShareMeme(elForm, ev) {
+    ev.preventDefault();
+    const elCanvas = document.querySelector('canvas');
+    document.getElementById('imgData').value = elCanvas.toDataURL("image/jpeg");
+    let inputVal = document.getElementById('imgData').value;
+    doUploadImg(elForm, onSuccess, inputVal);
+
+    function onSuccess(uploadedImgUrl) {
+        uploadedImgUrl = encodeURIComponent(uploadedImgUrl);
+        window.open(`https://www.facebook.com/sharer?u=${uploadedImgUrl}`, '_blank')
+    }
+}
+
+// Define doUploadImage() - try to upload image to web
+function doUploadImg(elForm, onSuccess) {
+    var formData = new FormData(elForm);
+    fetch('//ca-upload.com/here/upload.php', {
+        method: 'POST',
+        body: formData
+    })
+        .then(function (res) {
+            return res.text()
+        })
+        .then(onSuccess)
+        .catch(function (err) {
+            console.error(err)
+        })
 }

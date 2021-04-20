@@ -88,10 +88,18 @@
                     </div>
                 </div>
 
+                <div class="editor-stickers-opts">
+                    <div class="editor-stickers-title">Stickers</div>
+                    <div class="stickers-container"></div>
+                </div>
+
                 <div class="shareAndDownload flex space-between">
+                    <form action="" method="POST" enctype="multipart/form-data" onsubmit="onShareMeme(this, event)">
+                        <input id="imgData" hidden />
+                        <button class="dark-btn" type="submit">Share</button>
+                    </form>
                     <button class="dark-btn" onclick="onStoreMeme()">Save</button>
-                    <button class="dark-btn" onclick="onShareMeme()">Share</button>
-                    <button class="dark-btn" onclick="onDownloadMeme()">Download</button>
+                    <a class="dark-btn" onclick="onDownloadMeme(this)"  download="my-meme.jpg">Download</a>
 
             </div>
         </section>

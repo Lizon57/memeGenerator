@@ -145,7 +145,7 @@ main{
     border: 1px solid black;
     display: grid;
     grid-template-columns: 1fr 1fr;
-    grid-template-rows: 3rem 3rem auto 5rem;
+    grid-template-rows: 3rem 3rem 1fr 8rem 4rem;
 }
 
 .meme-editor-title{
@@ -163,7 +163,8 @@ main{
 }
 
 .editor-text-title,
-.editor-stroke-title{
+.editor-stroke-title,
+.editor-stickers-title{
     background-color: #fb9623;
     font-size: 1.1rem;
     font-weight: 600;
@@ -249,6 +250,15 @@ option[name="nova"]{
 input[type="range"]{
     cursor: pointer;
     box-shadow: 1px 1px 1px black;
+}
+
+.editor-stickers-opts{
+    grid-column: 1/3;
+}
+
+.stickers-container span{
+    cursor: pointer;
+    padding: 0.5rem;
 }
 
 .shareAndDownload{
