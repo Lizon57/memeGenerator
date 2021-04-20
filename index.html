@@ -22,9 +22,9 @@
             <div class="nav-menu">
                 <span class="nav-hamburger" onclick="menuToggle()">☰</span>
                 <ul class="clean-list flex">
-                    <li><a href="#">Gallery</a></li>
-                    <li><a href="#">Saved</a></li>
-                    <li><a href="#">About</a></li>
+                    <li><a href="#" onclick="onSelectSection(this.innerHTML)">Gallery</a></li>
+                    <li><a href="#" onclick="onSelectSection(this.innerHTML)">Saved</a></li>
+                    <li><a href="#" onclick="onSelectSection(this.innerHTML)">About</a></li>
                 </ul>
             </div>
         </div>
@@ -41,39 +41,64 @@
         <!-- Meme editor -->
         <section class="meme-editor-section">
             <div class="meme-canvas-container">
+                <div class="meme-canvas-title">You're meme</div>
                 <canvas id="meme-canvas" width="500" height="500"></canvas>
             </div>
 
             <div class="meme-editor">
-                <input type="text" class="line-input" placeholder="Please insert text" size="40"
-                    onkeyup="onChangeLine(this.value)" />
-                (Curr Line: <span name="curr-line"></span>)
-                <button class="btn" onclick="onChangeWorkingLine('increase')">↑</button>
-                <button class="btn" onclick="onChangeWorkingLine('decrease')">↓</button>
-                <button class="btn fa fa-trash" onclick="onDeleteLine()"></button>
-                <div class="meme-editor-opts">
-                    <button class="btn fa fa-align-left" onclick="onChangeTextAlign('left')"></button>
-                    <button class="btn fa fa-align-center" onclick="onChangeTextAlign('center')"></button>
-                    <button class="btn fa fa-align-right" onclick="onChangeTextAlign('right')"></button>
-
-                    <select onchange="onSelectFont(this.value)">
-                        <option name="impact">Impact</option>
-                        <option name="libre">LibreBaskerville</option>
-                        <option name="monoton">Monoton</option>
-                        <option name="courgette">Courgette</option>
-                        <option name="nova">Nova</option>
-                    </select><br />
-
-                    <button class="btn fa fa-stroke" onclick="onToggleStroke()"></button>
-                    <input type="color" name="stroke-color-picker" onchange="onChangeStrokeColor(this.value)" />
-                    <input type="range" onchange="onChangeStrokeSize(this.value)" min="1" max="20" />
-                    <span class="curr-stroke"></span><br />
-
-                    <span>Font: </span>
-                    <input type="color" name="font-color-picker" onchange="onChangeFontColor(this.value)" />
-                    <input type="range" onchange="onChangeFontSize(this.value)" min="20" max="40" />
-                    <span class="curr-font-size"></span><br />
+                <div class="meme-editor-title">Edit meme</div>
+                <div class="editor-curr-line">Edit line no. <span name="curr-line"></span>
+                    <button class="btn" onclick="onChangeWorkingLine('increase')">+</button>
+                    <button class="btn" onclick="onChangeWorkingLine('decrease')">-</button>
+                    <button class="btn fa fa-trash" onclick="onDeleteLine()"></button>
                 </div>
+
+                <div class="editor-text-opts">
+                    <div class="editor-text-title">Text</div>
+                    <div class="editor-text-opts-container">
+                        <input type="text" class="line-input" placeholder="Please insert text" size="40"
+                            onkeyup="onChangeLine(this.value)" />
+
+                        <button class="btn fa fa-align-left" onclick="onChangeTextAlign('left')"></button>
+                        <button class="btn fa fa-align-center" onclick="onChangeTextAlign('center')"></button>
+                        <button class="btn fa fa-align-right" onclick="onChangeTextAlign('right')"></button>
+
+                        <select onchange="onSelectFontFamily(this.value)">
+                            <option name="impact">Impact</option>
+                            <option name="libre">LibreBaskerville</option>
+                            <option name="monoton">Monoton</option>
+                            <option name="courgette">Courgette</option>
+                            <option name="nova">Nova</option>
+                        </select><br />
+
+                        <input type="color" name="font-color-picker" onchange="onChangeFontColor(this.value)" />
+                        <input type="range" onchange="onChangeFontSize(this.value)" min="20" max="40" />
+                        <span class="curr-font-size"></span>
+                    </div>
+
+                </div>
+
+                <div class="editor-stroke-opts">
+                    <div class="editor-stroke-title">Stroke</div>
+                    <div class="editor-stroke-opts-container">
+                        <button class="btn fa fa-stroke" onclick="onToggleStroke()"></button>
+                        <input type="color" name="stroke-color-picker" onchange="onChangeStrokeColor(this.value)" />
+                        <input type="range" onchange="onChangeStrokeSize(this.value)" min="1" max="20" />
+                        <span class="curr-stroke"></span>
+                    </div>
+                </div>
+
+                <div class="shareAndDownload flex space-between">
+                    <button class="dark-btn" onclick="onStoreMeme()">Save</button>
+                    <button class="dark-btn" onclick="onShareMeme()">Share</button>
+                    <button class="dark-btn" onclick="onDownloadMeme()">Download</button>
+
+            </div>
+        </section>
+
+        <section class="saved-meme">
+            <div class="saved-meme-container">
+
             </div>
         </section>
 
@@ -87,8 +112,10 @@
 
 
     <script src="js/menu.js"></script>
+    <script src="js/service/storage-service.js"></script>
     <script src="js/service/meme-service.js"></script>
     <script src="js/controller/meme-controller.js"></script>
+    <script src="js/controller/saved-meme-controller.js"></script>
 </body>
 
 </html>

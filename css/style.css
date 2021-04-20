@@ -83,8 +83,8 @@ nav img{
 }
 
 .nav-menu ul li{
-    border-top: 1px solid #a8172a;
     padding: 1rem;
+    border-top: 1px solid #fe6e20;
 }
 
 .nav-menu ul li a{
@@ -94,7 +94,7 @@ nav img{
     letter-spacing: 2px;
     text-decoration: none;
     text-transform: uppercase;
-    transition: color ease-in-out .3s;
+    transition: color ease-in-out .5s;
 }
 
 nav ul li a:hover{
@@ -123,21 +123,72 @@ main{
     gap: .5em;
 }
 
+.meme-canvas-container,
 .meme-editor{
+    overflow: hidden;
+    border-top-left-radius: 1rem;
+    border-top-right-radius: 1rem;
+}
+
+.meme-canvas-title,
+.meme-editor-title{
+    background-color: black;
+    color: #fe6e20;
+    font-size: 1.5rem;
+    font-weight: 600;
+    letter-spacing: 1px;
+    line-height: 3rem;
     text-align: center;
 }
 
-.meme-editor input:first-child{
+.meme-editor{
+    border: 1px solid black;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: 3rem 3rem auto 5rem;
+}
+
+.meme-editor-title{
+    grid-column: 1/3;
+}
+
+.editor-curr-line{
     background-color: #a8172a;
     color: white;
-    font-family: Impact, sans-serif;
-    font-size: 1.5rem;
+    font-size: 1.2rem;
+    font-weight: 600;
+    grid-column: 1/3;
+    line-height: 3rem;
+    text-align: center;
+}
+
+.editor-text-title,
+.editor-stroke-title{
+    background-color: #fb9623;
+    font-size: 1.1rem;
+    font-weight: 600;
+    text-align: center;
+    padding: .3rem;
+}
+
+.editor-text-title{
+    border-right: 2px dotted black;
+}
+
+.editor-text-opts-container,
+.editor-stroke-opts-container{
+    padding: .5rem;
+}
+
+.meme-editor input[type="text"]{
+    background-color: #a8172a;
+    color: white;
+    font-size: 1rem;
     border-radius: 2rem;
-    border: 2px solid black;
+    border: 1px solid black;
     outline: none;
-    padding-inline-start: 1rem;
-    margin-bottom: .3rem;
-    width: 100%;
+    padding-inline: 1rem;
+    margin: 0 .3rem .5rem;
 }
 
 .fa {
@@ -175,15 +226,6 @@ main{
     padding: 0 1rem;
 }
 
-.meme-editor-opts{
-    margin-top: 2rem;
-}
-
-.meme-editor-opts select,
-option{
-    font-size: 1.3rem;
-}
-
 option[name="impact"]{
     font-family: impact, sans-serif;
 }
@@ -207,6 +249,24 @@ option[name="nova"]{
 input[type="range"]{
     cursor: pointer;
     box-shadow: 1px 1px 1px black;
+}
+
+.shareAndDownload{
+    background-color: cadetblue;
+    padding: 0.5rem 2rem;
+    grid-column: 1/3;
+}
+
+.dark-btn{
+    cursor: pointer;
+    background-color: #a8172a;
+    color: white;
+    border: 1px solid black;
+    border-radius: .5rem;
+    font-size: 1.3rem;
+    font-weight: 600;
+    line-height: 2rem;
+    padding: 0 1rem;
 }
 
 /* FOOTER */
@@ -261,6 +321,7 @@ footer{
     }
 
     .nav-menu ul li{
+        border-top: 0;
         width: 10rem;
     }
 }
@@ -270,7 +331,8 @@ footer{
         margin-inline-end: 0;
     }
 
-    .nav-menu ul li:last-child{
+    .nav-menu ul li{
         padding: 1rem 0;
+        text-align: right;
     }
 }

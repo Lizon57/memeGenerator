@@ -1,5 +1,9 @@
 'use strict';
 
+let gStartPos;
+let gIsDraging = false;
+let gLineDrag;
+
 // Define init() - init the page when loaded
 function init() {
     onCreateGallery();
@@ -11,6 +15,7 @@ function init() {
     renderFontColorPicker();
     renderFontSize();
     renderCanvas();
+    addListeners();
 }
 
 // Define onCreateGallery() - create meme gallery
@@ -27,23 +32,20 @@ function onCreateGallery() {
     elGallery.innerHTML = strsHTML;
 }
 
-
-
 // Define renderCanvas() - rendering the canvas to the DOM
 function renderCanvas() {
 
     // Define canvas helpers
-    const elCanvas = document.querySelector("canvas");
-    const ctx = elCanvas.getContext("2d");
-    ctx.textAlign = 'center';
+    const elCanvas = document.querySelector('canvas');
+    const ctx = elCanvas.getContext('2d');
 
     // Handle curr meme img
-    const currMeme = getCurrMeme()[0];
+    const currMeme = getCurrMemeImg()[0];
     const memeImg = new Image();
     memeImg.src = currMeme.url;
 
     // Draw curr meme img to canvas (than handle lines)
-    memeImg.addEventListener('load', function () {
+    memeImg.addEventListener('load', () => {
         ctx.drawImage(memeImg, 0, 0);
 
         // Handle curr meme lines
@@ -52,16 +54,7 @@ function renderCanvas() {
         if (memeLines.length) {
             memeLines = memeLines[0].lines
             memeLines.forEach((line) => {
-                switch (line.lineId) {
-                    case 0:
-                        drawLine(ctx, line.txt, line.size, line.align, line.font, line.stroke, line.color, { x: 250, y: 50 });
-                        break;
-                    case 1:
-                        drawLine(ctx, line.txt, line.size, line.align, line.font, line.stroke, line.color, { x: 250, y: 450 });
-                        break;
-                    default:
-                        drawLine(ctx, line.txt, line.size, line.align, line.font, line.stroke, line.color, { x: elCanvas.width / 2, y: elCanvas.height / 2 });
-                }
+                drawLine(ctx, line.txt, line.font, line.stroke, line.pos);
             })
         }
 
@@ -70,9 +63,9 @@ function renderCanvas() {
 }
 
 // Define drawLine() - draw text line to canvas
-function drawLine(ctx, line, size, align, font, stroke, color, pos) {
-    ctx.font = `${size}px ${font}`;
-    ctx.textAlign = align;
+function drawLine(ctx, line, font, stroke, pos) {
+    ctx.font = `${font.size}px ${font.family}`;
+    ctx.textAlign = font.align;
 
     // Handle stroke
     if (!stroke.doStroke) ctx.lineWidth = 0;
@@ -83,7 +76,7 @@ function drawLine(ctx, line, size, align, font, stroke, color, pos) {
     }
 
     // Print filled txt
-    ctx.fillStyle = color;
+    ctx.fillStyle = font.color;
     ctx.fillText(line, pos.x, pos.y);
 }
 
@@ -141,8 +134,8 @@ function onChangeTextAlign(direction) {
 }
 
 // Define onSelectFont() - change line font
-function onSelectFont(font) {
-    changeTextFont(font);
+function onSelectFontFamily(fontFamily) {
+    changeTextFontFamily(fontFamily);
     renderCanvas();
 }
 
@@ -165,55 +158,155 @@ function toggleStrokeBtn() {
 }
 
 // Define onChangeStrokeColor() - change stroke color
-function onChangeStrokeColor(color){
+function onChangeStrokeColor(color) {
     changeStrokeColor(color);
     renderCanvas();
 }
 
 // Define renderStrokeColorPicker() - render stroke color picker to curr line color
-function renderStrokeColorPicker(){
+function renderStrokeColorPicker() {
     let elColorPicker = document.querySelector('input[name="stroke-color-picker"]');
 
     elColorPicker.value = getCurrLineStrokeColor();
 }
 
 // Define onChangeStrokeSize() - handle change stroke size
-function onChangeStrokeSize(size){
+function onChangeStrokeSize(size) {
     changeStrokeSize(size);
     renderStrokeSize(size);
     renderCanvas();
 }
 
 // Define renderStrokeSize() - render curr stroke size to dom
-function renderStrokeSize(size = getCurrStrokeSize()){
+function renderStrokeSize(size = getCurrStrokeSize()) {
     let elStrokeSizeRange = document.querySelector('.curr-stroke');
 
     elStrokeSizeRange.innerText = size + 'px';
 }
 
 // Define onChangeFontColor() - change stroke color
-function onChangeFontColor(color){
+function onChangeFontColor(color) {
     changeFontColor(color);
     renderCanvas();
 }
 
 // Define renderFontColorPicker() - render font color picker to curr line color
-function renderFontColorPicker(){
+function renderFontColorPicker() {
     let elColorPicker = document.querySelector('input[name="font-color-picker"]');
 
     elColorPicker.value = getCurrLineFontColor();
 }
 
 // Define onChangeStrokeSize() - handle change font size
-function onChangeFontSize(size){
+function onChangeFontSize(size) {
     changeFontSize(size);
     renderFontSize(size);
     renderCanvas();
 }
 
 // Define renderFontSize() - render curr stroke size to dom
-function renderFontSize(size = getCurrFontSize()){
+function renderFontSize(size = getCurrFontSize()) {
     let elStrokeSizeRange = document.querySelector('.curr-font-size');
 
     elStrokeSizeRange.innerText = size + 'px';
+}
+
+// Define onSaveMeme() - save meme to storage
+function onStoreMeme() {
+    storeMeme(getCurrMeme());
+}
+
+// Define onSelectSection() - hide all sections but the one selected via renderSection()
+function onSelectSection(section) {
+    switch (section) {
+        default:
+        case 'Gallery':
+            renderSection('meme-gallery');
+            break;
+        case 'Saved':
+            renderSection('saved-meme');
+            break;
+        case 'About':
+            renderSection('about');
+            break;
+    }
+}
+
+// Define renderSection() - hide all sections but the one selected
+function renderSection(sectionName) {
+    let sections = document.querySelectorAll('section');
+
+    sections.forEach((section) => {
+        if (!section.classList.contains(sectionName)) section.style.display = 'none';
+        else section.style.display = 'block';
+    });
+}
+
+// Define addListeners() - add mouse and touch listners on canvas (for drag and drop)
+function addListeners() {
+    const elCanvas = document.querySelector('canvas');
+
+    elCanvas.addEventListener('mousedown', dadDown);
+    elCanvas.addEventListener('touchstart', dadDown);
+    elCanvas.addEventListener('mousemove', dadMove);
+    elCanvas.addEventListener('touchmove', dadMove);
+    elCanvas.addEventListener('mouseup', dadUp);
+    elCanvas.addEventListener('touchend', dadUp);
+}
+
+// Define getEvPos() - return ev pos on canvas
+function getEvPos(ev) {
+    return { x: ev.offsetX, y: ev.offsetY };
+}
+
+// Define isLineClicked() - check if curr line has clicked
+function isLineClicked(clickeDpos) {
+    const linePos = getLinePos();
+    let lineClicked;
+
+    // If clicked on line set lineClicked (id & pos)
+    linePos.forEach((line) => {
+        if (clickeDpos.x > line.pos.x1 &&
+            clickeDpos.x < line.pos.x2 &&
+            clickeDpos.y > line.pos.y1 &&
+            clickeDpos.y < line.pos.y2) {
+            lineClicked = {
+                lId: line.lId,
+                pos: {
+                    x: clickeDpos.x,
+                    y: clickeDpos.y
+                }
+            }
+        }
+    });
+
+    return lineClicked;
+}
+
+// Define dadDown() - handle drag and drop: mouse down / touch start
+function dadDown() {
+    const pos = getEvPos(event);
+    const lineClicked = isLineClicked(pos)
+
+    if (typeof lineClicked !== "object") return;
+
+    gLineDrag = lineClicked.lId;
+    gStartPos = lineClicked.pos;
+    gIsDraging = true;
+    document.body.style.cursor = 'grabbing';
+}
+
+// Define dadMove() - handle drag and drop: move mouse / touch
+function dadMove() {
+    if (!gIsDraging) return;
+
+    const pos = getEvPos(event);
+    changeLinePos(gLineDrag, pos);
+    renderCanvas();
+}
+
+// Define dadUp() - handle drag and drop: mouse up / touch end
+function dadUp() {
+    gIsDraging = false;
+    document.body.style.cursor = 'auto';
 }
