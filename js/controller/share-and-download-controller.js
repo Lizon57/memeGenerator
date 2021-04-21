@@ -46,7 +46,7 @@ function onShareWhatsapp(elForm, ev) {
     // A function to be called if request succeeds
     function onSuccess(uploadedImgUrl) {
         uploadedImgUrl = encodeURIComponent(uploadedImgUrl)
-        window.open(`whatsapp://send?text=${uploadedImgUrl}`, '_blank');
+        window.open(`https://wa.me/?text=${uploadedImgUrl}`, '_blank');
     }
 
     doUploadImg(elForm, onSuccess);
