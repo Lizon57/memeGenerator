@@ -1,7 +1,6 @@
 'use strict';
 
 // Avoid onload bug when section load
-const RESIZER = 3;
 const elSavedSection = document.querySelector('.saved-meme');
 elSavedSection.addEventListener("load", initSaved());
 

@@ -6,11 +6,10 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>Meme generator -(by Oren Yaniv)</title>
+    <link rel="icon" type="image/png" href="img/favicon.png" />
+    <title>Meme generator (by Oren Yaniv)</title>
 
     <link rel="stylesheet" href="css/style.css">
-
-    <link rel="icon" type="image/png" href="img/favicon.png" />
 </head>
 
 <body onload="init()">
@@ -18,7 +17,7 @@
     <!-- Navigation bar -->
     <nav>
         <div class="container flex space-between align-center">
-            <a href="#"><img src="img/logo.png" alt="logo" /></a>
+            <a href="#" onclick="onSelectSection('Gallery')"><img src="img/logo.png" alt="Meme generator (logo)" /></a>
             <div class="nav-menu">
                 <span class="nav-hamburger" onclick="menuToggle()">☰</span>
                 <ul class="clean-list flex">
@@ -34,46 +33,51 @@
     <!-- The page -->
     <main class="container">
 
-        <!-- TODO: add gallery -->
-        <section class="meme-gallery">
-        </section>
+        <!-- Memes useable gallery (render from meme-controller) -->
+        <section class="meme-gallery"></section>
 
         <!-- Meme editor -->
         <section class="meme-editor-section">
             <div class="meme-canvas-container">
                 <div class="meme-canvas-title">You're meme</div>
-                <canvas id="meme-canvas" width="500" height="500"></canvas>
+                <canvas id="meme-canvas"></canvas>
             </div>
 
             <div class="meme-editor">
-                <div class="meme-editor-title">Edit meme</div>
+                <div class="meme-editor-title">Edit</div>
                 <div class="editor-curr-line">Edit line no. <span name="curr-line"></span>
-                    <button class="btn" onclick="onChangeWorkingLine('increase')">+</button>
-                    <button class="btn" onclick="onChangeWorkingLine('decrease')">-</button>
+                    <button class="btn fa fa-plus" onclick="onChangeWorkingLine('increase')"></button>
+                    <button class="btn fa fa-minus" onclick="onChangeWorkingLine('decrease')"></button>
                     <button class="btn fa fa-trash" onclick="onDeleteLine()"></button>
                 </div>
 
                 <div class="editor-text-opts">
-                    <div class="editor-text-title">Text</div>
+                    <div class="editor-text-title">Text and font</div>
                     <div class="editor-text-opts-container">
-                        <input type="text" class="line-input" placeholder="Please insert text" size="40"
+                        <input type="text" class="line-input" placeholder="Please insert text"
                             onkeyup="onChangeLine(this.value)" />
 
-                        <button class="btn fa fa-align-left" onclick="onChangeTextAlign('left')"></button>
-                        <button class="btn fa fa-align-center" onclick="onChangeTextAlign('center')"></button>
-                        <button class="btn fa fa-align-right" onclick="onChangeTextAlign('right')"></button>
+                        <div class="text-ops-container">
+                            <input type="color" name="font-color-picker" onchange="onChangeFontColor(this.value)" />
+                            <input type="range" name="font-size-picker" onchange="onChangeFontSize(this.value)" min="20"
+                                max="50" />
+                            <span class="curr-font-size"></span>
+                        </div>
 
-                        <select onchange="onSelectFontFamily(this.value)">
+                        <select name="font-family-picker" onchange="onSelectFontFamily(this.value)">
                             <option name="impact">Impact</option>
                             <option name="libre">LibreBaskerville</option>
                             <option name="monoton">Monoton</option>
                             <option name="courgette">Courgette</option>
                             <option name="nova">Nova</option>
-                        </select><br />
+                        </select>
 
-                        <input type="color" name="font-color-picker" onchange="onChangeFontColor(this.value)" />
-                        <input type="range" onchange="onChangeFontSize(this.value)" min="20" max="40" />
-                        <span class="curr-font-size"></span>
+                        <div class="text-align-container">
+                            <button class="btn fa fa-align-left" onclick="onChangeTextAlign('left')"></button>
+                            <button class="btn fa fa-align-center" onclick="onChangeTextAlign('center')"></button>
+                            <button class="btn fa fa-align-right" onclick="onChangeTextAlign('right')"></button>
+                        </div>
+
                     </div>
 
                 </div>
@@ -81,10 +85,12 @@
                 <div class="editor-stroke-opts">
                     <div class="editor-stroke-title">Stroke</div>
                     <div class="editor-stroke-opts-container">
-                        <button class="btn fa fa-stroke" onclick="onToggleStroke()"></button>
                         <input type="color" name="stroke-color-picker" onchange="onChangeStrokeColor(this.value)" />
-                        <input type="range" onchange="onChangeStrokeSize(this.value)" min="1" max="20" />
+                        <input type="range" onchange="onChangeStrokeSize(this.value)" min="1" max="10" />
                         <span class="curr-stroke"></span>
+                        <div class="toggle-stroke-container">
+                            <button class="btn fa fa-stroke" onclick="onToggleStroke()"></button>
+                        </div>
                     </div>
                 </div>
 
@@ -94,16 +100,17 @@
                 </div>
 
                 <div class="shareAndDownload flex space-between">
-                    <form action="" method="POST" enctype="multipart/form-data" onsubmit="onShareMeme(this, event)">
+                    <form action="" method="POST" enctype="multipart/form-data" onsubmit="onShareFacebook(this, event)">
                         <input name="img" id="imgData" hidden />
-                        <button class="dark-btn" type="submit">Share FB</button>
+                        <button class="btn fab fa-facebook" type="submit"></button>
                     </form>
 
-                    <button class="dark-btn" onclick="onShareWhatsApp()">Share W</button>
-                    <button class="dark-btn" onclick="onStoreMeme()">Save</button>
-                    <a class="dark-btn" onclick="onDownloadMeme(this)" download="my-meme.png">Download</a>
+                    <button class="btn fab fa-whatsapp" onclick="onShareWhatsApp()"></button>
+                    <button class="btn fas fa-save" onclick="onStoreMeme()"></button>
+                    <a class="btn fas fa-download" onclick="onDownloadMeme(this)" download="my-meme.png"></a>
 
                 </div>
+
         </section>
 
         <section class="saved-meme">
@@ -114,18 +121,17 @@
 
     </main>
 
-
-    <!-- Footer -->
-    <footer>
-        &copy; Meme Generator by Oren Yaniv.
-    </footer>
-
-
     <script src="js/menu.js"></script>
-    <script src="js/service/storage-service.js"></script>
+    <script src="js/db/memeDb.js"></script>
+    <script src="js/service/gallery-service.js"></script>
+    <script src="js/controller/gallery-controller.js"></script>
+    <!-- <script src="js/service/storage-service.js"></script> -->
     <script src="js/service/meme-service.js"></script>
+    <!-- <script src="js/controller/saved-meme-controller.js"></script> -->
+    <script src="js/controller/share-and-download-controller.js"></script>
+    <script src="js/controller/drag-and-drop-controller.js"></script>
+    <script src="js/service/drag-and-drop-service.js"></script>
     <script src="js/controller/meme-controller.js"></script>
-    <script src="js/controller/saved-meme-controller.js"></script>
 </body>
 
 </html>

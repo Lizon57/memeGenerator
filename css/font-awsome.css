@@ -1,0 +1,56 @@
+/* FONT AWSOME */
+.fa {
+  font-family: font-awsome-reg;
+}
+
+.fab {
+  font-family: font-awsome-brands;
+}
+
+.fas {
+  font-family: font-awsome-solid;
+}
+
+.fa-plus::before {
+  content: "\f067";
+}
+
+.fa-minus::before {
+  content: "\f068";
+}
+
+.fa-trash::before {
+  content: "\f55a";
+}
+
+.fa-align-left::before {
+  content: "\f036";
+}
+
+.fa-align-center::before {
+  content: "\f037";
+}
+
+.fa-align-right::before {
+  content: "\f038";
+}
+
+.fa-stroke::before {
+  content: "\f032";
+}
+
+.fa-facebook::before{
+  content: "\f39e";
+}
+
+.fa-whatsapp::before{
+  content: "\f232";
+}
+
+.fa-save::before{
+  content: "\f0c7";
+}
+
+.fa-download::before{
+  content: "\f56d";
+}

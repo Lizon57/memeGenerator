@@ -1,0 +1,40 @@
+/* TYPOGRAHPY */
+@font-face {
+  font-family: montserrat;
+  src: url("../font/Montserrat-Bold.ttf");
+}
+
+@font-face {
+  font-family: libreBaskerville;
+  src: url("../font/LibreBaskerville-Regular.ttf");
+}
+
+@font-face {
+  font-family: monoton;
+  src: url("../font/Monoton-Regular.ttf");
+}
+
+@font-face {
+  font-family: courgette;
+  src: url("../font/Courgette-Regular.ttf");
+}
+
+@font-face {
+  font-family: nova;
+  src: url("../font/NovaMono-Regular.ttf");
+}
+
+@font-face {
+  font-family: font-awsome-reg;
+  src: url("../font/Font-Awsome-Reg.ttf");
+}
+
+@font-face {
+  font-family: font-awsome-brands;
+  src: url("../font/Font-Awsome-Brands.ttf");
+}
+
+@font-face {
+  font-family: font-awsome-solid;
+  src: url("../font/Font-Awsome-Solid.ttf");
+}
