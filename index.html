@@ -105,7 +105,9 @@
                         <button class="btn fab fa-facebook" type="submit"></button>
                     </form>
 
-                    <a class="btn fab fa-whatsapp" onclick="onShareWhatsapp(this)"></a>
+                    <form action="" method="POST" enctype="multipart/form-data" onsubmit="onShareWhatsapp(this, event)">
+                        <button class="btn fab fa-whatsapp" type="submit"></button>
+                    </form>
                     <button class="btn fas fa-save" onclick="onStoreMeme()"></button>
                     <a class="btn fas fa-download" onclick="onDownloadMeme(this)" download="my-meme.png"></a>
 

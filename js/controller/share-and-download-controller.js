@@ -35,3 +35,17 @@ function onDownloadMeme(elLink) {
     let meme = gElCanvas.toDataURL();
     elLink.href = meme;
 }
+
+// Define onShareWhatsapp() - share on whatsapp
+function onShareWhatsapp(elForm, ev) {
+    ev.preventDefault();
+    document.getElementById('imgData').value = gElCanvas.toDataURL('image/jpeg');
+
+    // A function to be called if request succeeds
+    function onSuccess(uploadedImgUrl) {
+        uploadedImgUrl = encodeURIComponent(uploadedImgUrl)
+        window.open(`whatsapp://send?text=${uploadedImgUrl}`, '_blank');
+    }
+
+    doUploadImg(elForm, onSuccess);
+}
