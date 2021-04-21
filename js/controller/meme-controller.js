@@ -53,6 +53,10 @@ function addListeners() {
 
 // Define onSelectSection() - hide all sections but the one selected via renderSection()
 function onSelectSection(section) {
+
+    // Prevent skipping sections bug
+    gCurrLine = 0;
+
     switch (section) {
         default:
         case 'Gallery':

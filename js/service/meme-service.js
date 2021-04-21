@@ -161,10 +161,10 @@ function addSticker(sticker) {
 // Define defineLinePos() - return line pos according to currline
 function defineLinePos(num) {
     switch (num) {
-        case 1:
+        case 0:
             return { x: 250, y: 50 }
             break;
-        case 2:
+        case 1:
             return { x: 250, y: 450 }
             break;
         default:
