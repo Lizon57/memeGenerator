@@ -287,3 +287,8 @@ function renderTextInput() {
 function onStoreMeme() {
     storeMeme(getCurrMeme());
 }
+
+// Define onShareWhatsapp() - share on whatsapp
+function onShareWhatsapp(elLink){
+    elLink.href = `whatsapp://send?text=${encodeURIComponent(gElCanvas.toDataURL('image/jpeg'))}`
+}
