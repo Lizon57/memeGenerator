@@ -17,7 +17,7 @@ function renderGallery() {
 }
 
 // Define onChangeImg() - handle meme pick from gallery
-function onChangeImg(id){
+function onChangeImg(id) {
     changeCurrMemeVar(id);
     initCanvasAndEditor();
     renderSection('meme-editor-section');

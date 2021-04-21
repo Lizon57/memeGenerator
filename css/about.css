@@ -1,0 +1,18 @@
+/* ABOUT */
+h2 {
+  color: #a8172a;
+  margin: 1rem auto;
+}
+
+p {
+  margin: 0;
+}
+
+.about a:link,
+.about a:hover,
+.about a:visited {
+  color: #fe6e20;
+  font-family: courgette;
+  font-weight: 600;
+  text-decoration: none;
+}

@@ -100,12 +100,14 @@
                 </div>
 
                 <div class="shareAndDownload flex space-between">
-                    <form name="facebook-share" method="POST" enctype="multipart/form-data" onsubmit="onShareFacebook(this, event)">
+                    <form name="facebook-share" method="POST" enctype="multipart/form-data"
+                        onsubmit="onShareFacebook(this, event)">
                         <input name="img" id="imgDataFacebook" hidden />
                         <button class="btn fab fa-facebook" type="submit"></button>
                     </form>
 
-                    <form name="whatsapp-share" method="POST" enctype="multipart/form-data" onsubmit="onShareWhatsapp(this, event)">
+                    <form name="whatsapp-share" method="POST" enctype="multipart/form-data"
+                        onsubmit="onShareWhatsapp(this, event)">
                         <button class="btn fab fa-whatsapp" type="submit"></button>
                         <input name="img" id="imgDataWhatsapp" hidden />
                     </form>
@@ -117,9 +119,22 @@
         </section>
 
         <section class="saved-meme">
-            <div class="saved-meme-container">
+            <div class="saved-meme-container"></div>
+        </section>
 
-            </div>
+        <section class="about">
+            <h2>Welcome to MEMEGEN.</h2>
+            <p>
+                MEMEGEN created on April '21 as a proj for <a href="https://www.coding-academy.org">Coding-Academy</a>
+                boot camp.<br />
+                The proj aim was to create a meme generator based on html5's canvas element, combining vanilla JS and
+                pure CSS.<br />
+                Proj time limit was less than 100 hours and no started has given.<br />
+                This meme generator is responsive, easy to use and have a nice look (of course, I must compliment my
+                self).<br />
+                The proj combine MVC principles and some touch elements such as drag and drop.<br />
+                Hope you'll find it nice, or even awsome.
+            </p>
         </section>
 
     </main>
@@ -128,12 +143,12 @@
     <script src="js/db/memeDb.js"></script>
     <script src="js/service/gallery-service.js"></script>
     <script src="js/controller/gallery-controller.js"></script>
-    <!-- <script src="js/service/storage-service.js"></script> -->
     <script src="js/service/meme-service.js"></script>
-    <!-- <script src="js/controller/saved-meme-controller.js"></script> -->
     <script src="js/controller/share-and-download-controller.js"></script>
     <script src="js/controller/drag-and-drop-controller.js"></script>
     <script src="js/service/drag-and-drop-service.js"></script>
+    <script src="js/service/storage-service.js"></script>
+    <script src="js/controller/saved-meme-controller.js"></script>
     <script src="js/controller/meme-controller.js"></script>
 </body>
 

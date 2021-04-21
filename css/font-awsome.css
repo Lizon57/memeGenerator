@@ -39,18 +39,18 @@
   content: "\f032";
 }
 
-.fa-facebook::before{
+.fa-facebook::before {
   content: "\f39e";
 }
 
-.fa-whatsapp::before{
+.fa-whatsapp::before {
   content: "\f232";
 }
 
-.fa-save::before{
+.fa-save::before {
   content: "\f0c7";
 }
 
-.fa-download::before{
+.fa-download::before {
   content: "\f56d";
 }

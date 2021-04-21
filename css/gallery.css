@@ -4,7 +4,7 @@
   grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
   gap: 5px;
   text-align: center;
-  padding: 0 1rem 0 .5rem;
+  padding: 0 1rem 0 0.5rem;
 }
 
 .gallery-item {
@@ -14,7 +14,7 @@
 .gallery-item img {
   cursor: pointer;
   border: 1px solid black;
-  border-radius: .5em;
+  border-radius: 0.5em;
   width: 100px;
   height: auto;
 }
