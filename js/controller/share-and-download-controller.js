@@ -19,7 +19,7 @@ function doUploadImg(elForm, onSuccess) {
 // Define onShareFacebook() - share meme to facebook
 function onShareFacebook(elForm, ev) {
     ev.preventDefault();
-    document.getElementById('imgData').value = gElCanvas.toDataURL('image/jpeg');
+    document.getElementById('imgDataFacebook').value = gElCanvas.toDataURL('image/jpeg');
 
     // A function to be called if request succeeds
     function onSuccess(uploadedImgUrl) {
@@ -30,16 +30,18 @@ function onShareFacebook(elForm, ev) {
     doUploadImg(elForm, onSuccess);
 }
 
+
 // Define onDownloadMeme() - download meme as png
 function onDownloadMeme(elLink) {
     let meme = gElCanvas.toDataURL();
     elLink.href = meme;
 }
 
+
 // Define onShareWhatsapp() - share on whatsapp
 function onShareWhatsapp(elForm, ev) {
     ev.preventDefault();
-    document.getElementById('imgData').value = gElCanvas.toDataURL('image/jpeg');
+    document.getElementById('imgDataWhatsapp').value = gElCanvas.toDataURL('image/jpeg');
 
     // A function to be called if request succeeds
     function onSuccess(uploadedImgUrl) {

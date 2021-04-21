@@ -100,13 +100,14 @@
                 </div>
 
                 <div class="shareAndDownload flex space-between">
-                    <form action="" method="POST" enctype="multipart/form-data" onsubmit="onShareFacebook(this, event)">
-                        <input name="img" id="imgData" hidden />
+                    <form name="facebook-share" method="POST" enctype="multipart/form-data" onsubmit="onShareFacebook(this, event)">
+                        <input name="img" id="imgDataFacebook" hidden />
                         <button class="btn fab fa-facebook" type="submit"></button>
                     </form>
 
-                    <form action="" method="POST" enctype="multipart/form-data" onsubmit="onShareWhatsapp(this, event)">
+                    <form name="whatsapp-share" method="POST" enctype="multipart/form-data" onsubmit="onShareWhatsapp(this, event)">
                         <button class="btn fab fa-whatsapp" type="submit"></button>
+                        <input name="img" id="imgDataWhatsapp" hidden />
                     </form>
                     <button class="btn fas fa-save" onclick="onStoreMeme()"></button>
                     <a class="btn fas fa-download" onclick="onDownloadMeme(this)" download="my-meme.png"></a>
